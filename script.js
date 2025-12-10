@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             glow.style.left = `${e.clientX}px`;
             glow.style.top = `${e.clientY}px`;
         });
-    });
+
 
             // 2. Lógica de Video: PLAY on HOVER
             const videos = document.querySelectorAll('video');
