@@ -462,13 +462,24 @@
         /* --- VIDEO MEJORADO (SIN SALTOS) --- */
         .project-media {
             position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            transition: box-shadow 0.5s ease;
+            display: inline-block;
+            line-height: 0;
         }
 
-        .project-media::before {
+        .cinematic-video {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            transition: transform 0.7s cubic-bezier(0.2, 1, 0.2, 1), 
+                        box-shadow 0.5s ease,
+                        filter 0.3s ease;
+            position: relative;
+        }
+
+        /* Borde brillante que se ajusta exactamente al video */
+        .project-media::after {
             content: '';
             position: absolute;
             top: 0;
@@ -476,49 +487,24 @@
             right: 0;
             bottom: 0;
             border-radius: 8px;
-            padding: 2px;
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             opacity: 0;
             transition: opacity 0.5s ease;
             pointer-events: none;
-            z-index: 1;
         }
 
-        .project-media:hover::before {
-            opacity: 0.6;
-        }
-
-        .project-media:hover {
-            box-shadow: 0 30px 80px rgba(100, 255, 218, 0.2);
-        }
-
-        .cinematic-video {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.7s cubic-bezier(0.2, 1, 0.2, 1), opacity 0.3s ease;
-            opacity: 1;
-        }
-
-        /* Placeholder cuando el video no está cargado */
-        .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: opacity 0.3s ease;
-            z-index: 0;
+        .project-media:hover::after {
+            opacity: 0.8;
         }
 
         .project-media:hover .cinematic-video {
-            transform: scale(1.05);
+            transform: scale(1.03);
+            box-shadow: 0 30px 80px rgba(100, 255, 218, 0.2);
         }
 
         /* --- FOOTER --- */
