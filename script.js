@@ -11,6 +11,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+            // 2. Lógica de Video: PLAY on HOVER
+            const videos = document.querySelectorAll('video');
+
+            videos.forEach(video => {
+                // Cuando el ratón entra: Reproducir
+                video.addEventListener('mouseenter', () => {
+                    video.play();
+                });
+
+                // Cuando el ratón sale:
+                video.addEventListener('mouseleave', () => {
+                    video.pause();
+                    // Opcional: Si quieres que vuelva a la carátula (poster)
+                    // descomenta la siguiente línea. Si la dejas comentada, se pausa donde quedó.
+                    video.load(); 
+                });
+            });
+        });
+
     // --- 2. OPTIMIZACIÓN DE VIDEO (Intersection Observer) ---
     // Esto hace que los videos se pausen automáticamente si no los estás viendo
     // y se reproduzcan solos cuando aparecen en pantalla.
