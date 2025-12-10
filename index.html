@@ -363,7 +363,7 @@
             display: grid;
             grid-template-columns: 1fr 2fr;
             gap: 4rem;
-            margin-bottom: 12rem;
+            margin-bottom: 8rem;
             align-items: center;
             opacity: 0;
             transform: translateY(50px);
@@ -475,36 +475,15 @@
             transition: transform 0.7s cubic-bezier(0.2, 1, 0.2, 1), 
                         box-shadow 0.5s ease,
                         filter 0.3s ease;
-            position: relative;
+            filter: brightness(0.95) saturate(0.9);
         }
 
-        /* Borde brillante que se ajusta exactamente al video */
-        .project-media::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 8px;
-            border: 2px solid transparent;
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary)) border-box;
-            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-        }
-
-        .project-media:hover::after {
-            opacity: 0.8;
-        }
-
+        /* Efecto de brillo y levitación al hover */
         .project-media:hover .cinematic-video {
-            transform: scale(1.03);
-            box-shadow: 0 30px 80px rgba(100, 255, 218, 0.2);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 35px 90px rgba(100, 255, 218, 0.15), 
+                        0 15px 40px rgba(0, 0, 0, 0.8);
+            filter: brightness(1.05) saturate(1.1);
         }
 
         /* --- FOOTER --- */
