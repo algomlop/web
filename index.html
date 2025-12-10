@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Arte & Tecnología</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fuentes de Google: Una Sans-Serif limpia y una Monospace para el toque Tech -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&family=Space+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Efecto de luz de fondo -->
+    <div class="cursor-glow"></div>
+
+    <!-- Navegación Minimalista -->
+    <nav>
+        <div class="logo">ALEJANDRO GÓMEZ<span class="dot">.</span></div>
+        <div class="links">
+            <a href="#about">Sobre mí</a>
+            <a href="#portfolio">Proyectos</a>
+            <a href="#contact">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Creando experiencias <br> donde el <span class="highlight">arte</span><br> encuentra al <span class="highlight">código</span>.</h1>
+            <p class="subtitle">Desarrollador Creativo & Artista Digital</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll para explorar</span>
+            <div class="line"></div>
+        </div>
+    </header>
+
+    <!-- Sección Sobre Mí / Contacto -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Sobre mí</h2>
+                    <p>Soy un híbrido entre diseñador y desarrollador. Me especializo en construir interfaces que no solo funcionan, sino que se sienten vivas. Mi enfoque combina la estética minimalista con interacciones modernas.</p>
+                    <br>
+                    <p class="tech-stack">[ HTML, CSS, JS, WebGL, Creative Coding ]</p>
+                </div>
+                <div class="contact-info" id="contact">
+                    <h2>Contacto</h2>
+                    <p>¿Tienes un proyecto en mente?</p>
+                    <a href="mailto:algomlopxxx@663260932.xyz" class="email-link">algomlopxxx@663260932.xyz ↗</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Cinematográfico -->
+    <section id="portfolio" class="portfolio-section">
+        <div class="container">
+            <h2 class="section-title">Trabajos Seleccionados <span class="count">(03)</span></h2>
+
+            <!-- PROYECTO 1 -->
+            <article class="project-item">
+                <div class="project-info">
+                    <span class="project-number">01</span>
+                    <h3>Nombre del Proyecto</h3>
+                    <p class="project-desc">Una breve descripción del proyecto. Explica aquí qué tecnologías usaste y cuál fue el reto artístico.</p>
+                    <a href="https://github.com" target="_blank" class="github-btn">
+                        Ver en GitHub 
+                        <!-- Icono SVG simple de flecha -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                    </a>
+                </div>
+                <div class="project-media">
+                    <!-- VIDEO AUTOREPRODUCIBLE -->
+                    <!-- Reemplaza 'src' con la ruta de tu video.mp4 -->
+                    <!-- Poster es la imagen que se ve mientras carga el video -->
+                    <video 
+                        loop 
+                        muted 
+                        playsinline 
+                        poster="https://via.placeholder.com/1920x1080/1a1a1a/FFFFFF?text=Cargando+Video..."
+                        class="cinematic-video">
+                        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" type="video/mp4">
+                        Tu navegador no soporta video.
+                    </video>
+                </div>
+            </article>
+
+            <!-- PROYECTO 2 -->
+            <article class="project-item reverse">
+                <div class="project-info">
+                    <span class="project-number">02</span>
+                    <h3>Instalación Interactiva</h3>
+                    <p class="project-desc">Exploración de partículas mediante código creativo. Un sistema reactivo al sonido.</p>
+                    <a href="https://github.com" target="_blank" class="github-btn">
+                        Ver en GitHub 
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                    </a>
+                </div>
+                <div class="project-media">
+                    <video loop muted playsinline class="cinematic-video">
+                        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Volcano.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </article>
+
+            <!-- PROYECTO 3 -->
+            <article class="project-item">
+                <div class="project-info">
+                    <span class="project-number">03</span>
+                    <h3>Arte Generativo</h3>
+                    <p class="project-desc">Algoritmos que generan texturas únicas en cada recarga de página.</p>
+                    <a href="https://github.com" target="_blank" class="github-btn">
+                        Ver en GitHub 
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                    </a>
+                </div>
+                <div class="project-media">
+                    <video loop muted playsinline class="cinematic-video">
+                        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 - Diseñado con Código Puro.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
