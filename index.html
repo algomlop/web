@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Portfolio | Arte & Tecnología</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,12 +18,14 @@
             --border-color: #1a1a1a;
             --font-main: 'Inter', sans-serif;
             --font-mono: 'Space Mono', monospace;
+            --nav-height: 70px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: rgba(100, 255, 218, 0.1);
         }
 
         html {
@@ -39,7 +41,7 @@
             cursor: default;
         }
 
-        /* --- EFECTO SPOTLIGHT MEJORADO --- */
+        /* --- EFECTO SPOTLIGHT (SOLO DESKTOP) --- */
         .cursor-glow {
             width: 600px;
             height: 600px;
@@ -52,14 +54,21 @@
             z-index: 9999;
             mix-blend-mode: screen;
             transition: opacity 0.3s ease;
+            display: none;
         }
 
-        /* --- NAV MEJORADO --- */
+        @media (hover: hover) and (pointer: fine) {
+            .cursor-glow {
+                display: block;
+            }
+        }
+
+        /* --- NAV MEJORADO & RESPONSIVE --- */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 4rem;
+            padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
             position: fixed;
             width: 100%;
             top: 0;
@@ -69,16 +78,17 @@
             z-index: 100;
             border-bottom: 1px solid rgba(100, 255, 218, 0.1);
             transition: padding 0.3s ease;
+            height: var(--nav-height);
         }
 
         nav.scrolled {
-            padding: 1rem 4rem;
+            padding: 1rem clamp(1.5rem, 5vw, 4rem);
         }
 
         .logo {
             font-weight: 600;
             letter-spacing: -0.5px;
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
         }
         
         .logo .dot { 
@@ -93,21 +103,22 @@
 
         .links {
             display: flex;
-            gap: 2rem;
+            gap: clamp(1rem, 3vw, 2rem);
         }
 
         .links a {
             text-decoration: none;
             color: var(--dim-text);
-            font-size: 0.9rem;
+            font-size: clamp(0.85rem, 1.5vw, 0.9rem);
             position: relative;
             transition: color 0.3s;
+            padding: 0.5rem 0;
         }
 
         .links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
@@ -115,20 +126,28 @@
             transition: width 0.3s ease;
         }
 
-        .links a:hover {
-            color: var(--accent-color);
+        @media (hover: hover) {
+            .links a:hover {
+                color: var(--accent-color);
+            }
+            .links a:hover::after {
+                width: 100%;
+            }
         }
 
-        .links a:hover::after {
-            width: 100%;
+        /* Touch feedback */
+        .links a:active {
+            color: var(--accent-color);
+            transform: scale(0.95);
         }
 
         /* --- HERO MEJORADO --- */
         .hero {
             min-height: 100vh;
+            min-height: 100svh; /* Safari mobile fix */
             display: flex;
             align-items: center;
-            padding: 0 4rem;
+            padding: var(--nav-height) clamp(1.5rem, 5vw, 4rem) 2rem;
             position: relative;
             overflow: hidden;
         }
@@ -139,8 +158,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 800px;
-            height: 800px;
+            width: min(800px, 90vw);
+            height: min(800px, 90vw);
             background: radial-gradient(circle, rgba(100, 255, 218, 0.03) 0%, transparent 70%);
             pointer-events: none;
         }
@@ -152,7 +171,7 @@
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 5rem);
+            font-size: clamp(2rem, 7vw, 5rem);
             line-height: 1.1;
             font-weight: 300;
             margin-bottom: 1rem;
@@ -185,25 +204,25 @@
             margin-top: 2rem;
             color: var(--dim-text);
             font-family: var(--font-mono);
-            font-size: 1rem;
+            font-size: clamp(0.85rem, 2vw, 1rem);
             animation: fadeInUp 1s ease-out 0.3s backwards;
         }
 
         .scroll-indicator {
             position: absolute;
             bottom: 3rem;
-            left: 4rem;
+            left: clamp(1.5rem, 5vw, 4rem);
             display: flex;
             align-items: center;
             gap: 1rem;
             color: var(--dim-text);
             font-family: var(--font-mono);
-            font-size: 0.8rem;
+            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
             animation: fadeInUp 1s ease-out 0.6s backwards;
         }
 
         .line {
-            width: 50px;
+            width: clamp(30px, 10vw, 50px);
             height: 1px;
             background: var(--dim-text);
             position: relative;
@@ -226,7 +245,7 @@
 
         /* --- ABOUT MEJORADO --- */
         .about-section {
-            padding: 8rem 4rem;
+            padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
             background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
             position: relative;
         }
@@ -250,13 +269,19 @@
 
         .about-grid {
             display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 6rem;
+            grid-template-columns: 1fr;
+            gap: clamp(3rem, 8vw, 6rem);
+        }
+
+        @media (min-width: 900px) {
+            .about-grid {
+                grid-template-columns: 1.5fr 1fr;
+            }
         }
 
         .about-text h2,
         .contact-info h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             margin-bottom: 2rem;
             font-weight: 600;
             position: relative;
@@ -274,7 +299,7 @@
         }
 
         .about-text p {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
             line-height: 1.8;
             color: var(--dim-text);
         }
@@ -282,40 +307,45 @@
         .tech-stack {
             font-family: var(--font-mono);
             color: var(--accent-color);
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
             padding: 1.5rem;
             background: rgba(100, 255, 218, 0.05);
             border-left: 3px solid var(--accent-color);
             border-radius: 4px;
+            word-break: break-word;
         }
 
         .contact-info {
             background: rgba(255, 255, 255, 0.02);
-            padding: 3rem;
+            padding: clamp(2rem, 5vw, 3rem);
             border-radius: 8px;
             border: 1px solid var(--border-color);
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        .contact-info:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-color);
+        @media (hover: hover) {
+            .contact-info:hover {
+                transform: translateY(-5px);
+                border-color: var(--accent-color);
+            }
         }
 
         .contact-info p {
             color: var(--dim-text);
             margin-bottom: 1rem;
+            font-size: clamp(0.95rem, 2vw, 1rem);
         }
 
         .email-link {
             display: inline-block;
-            font-size: 1.5rem;
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
             color: var(--text-color);
             text-decoration: none;
             margin: 1rem 0;
             position: relative;
             transition: color 0.3s;
             word-break: break-all;
+            hyphens: auto;
         }
 
         .email-link::after {
@@ -329,45 +359,70 @@
             transition: width 0.3s ease;
         }
 
-        .email-link:hover {
-            color: var(--accent-color);
+        @media (hover: hover) {
+            .email-link:hover {
+                color: var(--accent-color);
+            }
+            .email-link:hover::after {
+                width: 100%;
+            }
         }
 
-        .email-link:hover::after {
-            width: 100%;
+        .email-link:active {
+            color: var(--accent-color);
         }
 
         /* --- PORTFOLIO CINEMATOGRÁFICO MEJORADO --- */
         .portfolio-section {
-            padding: 8rem 4rem;
+            padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
         }
 
         .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 6rem;
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
+            margin-bottom: clamp(3rem, 8vw, 6rem);
             font-weight: 300;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .count {
             font-family: var(--font-mono);
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
             color: var(--accent-color);
         }
 
         .project-item {
             display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4rem;
-            margin-bottom: 8rem;
+            grid-template-columns: 1fr;
+            gap: clamp(2rem, 5vw, 4rem);
+            margin-bottom: clamp(4rem, 10vw, 8rem);
             align-items: center;
             opacity: 0;
             transform: translateY(50px);
             animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @media (min-width: 900px) {
+            .project-item {
+                grid-template-columns: 1fr 2fr;
+            }
+            
+            .project-item.reverse {
+                grid-template-columns: 2fr 1fr;
+            }
+
+            .project-item.reverse .project-info {
+                order: 2;
+            }
+
+            .project-item.reverse .project-media {
+                order: 1;
+            }
         }
 
         .project-item:nth-child(2) {
@@ -378,29 +433,17 @@
             animation-delay: 0.4s;
         }
 
-        .project-item.reverse {
-            grid-template-columns: 2fr 1fr;
-        }
-
-        .project-item.reverse .project-info {
-            order: 2;
-        }
-
-        .project-item.reverse .project-media {
-            order: 1;
-        }
-
         .project-number {
             font-family: var(--font-mono);
             color: var(--accent-color);
             display: block;
             margin-bottom: 1rem;
-            font-size: 0.9rem;
+            font-size: clamp(0.85rem, 2vw, 0.9rem);
             font-weight: 700;
         }
 
         .project-info h3 {
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
             margin-bottom: 1.5rem;
             line-height: 1.2;
             font-weight: 600;
@@ -409,8 +452,9 @@
         .project-desc {
             color: var(--dim-text);
             margin-bottom: 2rem;
-            max-width: 400px;
+            max-width: 500px;
             line-height: 1.8;
+            font-size: clamp(0.95rem, 2vw, 1rem);
         }
 
         .github-btn {
@@ -420,14 +464,15 @@
             align-items: center;
             gap: 0.5rem;
             font-family: var(--font-mono);
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
             border: 1px solid var(--border-color);
-            padding: 0.8rem 1.5rem;
+            padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 1.5rem);
             margin-right: 1rem;
             margin-bottom: 0.5rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            touch-action: manipulation;
         }
 
         .github-btn::before {
@@ -441,25 +486,35 @@
             transition: left 0.5s ease;
         }
 
-        .github-btn:hover::before {
-            left: 100%;
+        @media (hover: hover) {
+            .github-btn:hover::before {
+                left: 100%;
+            }
+
+            .github-btn:hover {
+                border-color: var(--accent-color);
+                background: rgba(100, 255, 218, 0.05);
+                transform: translateX(5px);
+            }
+
+            .github-btn:hover svg {
+                transform: translate(3px, -3px);
+            }
         }
 
-        .github-btn:hover {
+        /* Touch feedback */
+        .github-btn:active {
             border-color: var(--accent-color);
-            background: rgba(100, 255, 218, 0.05);
-            transform: translateX(5px);
+            background: rgba(100, 255, 218, 0.1);
+            transform: scale(0.98);
         }
 
         .github-btn svg {
             transition: transform 0.3s ease;
+            flex-shrink: 0;
         }
 
-        .github-btn:hover svg {
-            transform: translate(3px, -3px);
-        }
-
-        /* --- VIDEO MEJORADO (SIN SALTOS) --- */
+        /* --- VIDEO MEJORADO (DESKTOP + MOBILE) --- */
         .project-media {
             position: relative;
             display: inline-block;
@@ -478,97 +533,87 @@
             filter: brightness(0.95) saturate(0.9);
         }
 
-        /* Efecto de brillo y levitación al hover */
-        .project-media:hover .cinematic-video {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 35px 90px rgba(100, 255, 218, 0.15), 
-                        0 15px 40px rgba(0, 0, 0, 0.8);
-            filter: brightness(1.05) saturate(1.1);
+        /* Indicador de play para móviles */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        @media (hover: none) {
+            .video-overlay {
+                display: flex;
+            }
+            
+            .project-media:not(.playing) .video-overlay {
+                opacity: 1;
+            }
+        }
+
+        .play-icon {
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            animation: pulsePlay 2s ease-in-out infinite;
+        }
+
+        @keyframes pulsePlay {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .play-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 20px solid var(--accent-color);
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 5px;
+        }
+
+        /* Efecto hover solo en desktop */
+        @media (hover: hover) {
+            .project-media:hover .cinematic-video {
+                transform: translateY(-10px) scale(1.02);
+                box-shadow: 0 35px 90px rgba(100, 255, 218, 0.15), 
+                            0 15px 40px rgba(0, 0, 0, 0.8);
+                filter: brightness(1.05) saturate(1.1);
+            }
+        }
+
+        /* Video activo en móvil */
+        @media (hover: none) {
+            .project-media.playing .cinematic-video {
+                filter: brightness(1.05) saturate(1.1);
+            }
         }
 
         /* --- FOOTER --- */
         footer {
-            padding: 4rem;
+            padding: clamp(2rem, 5vw, 4rem);
             text-align: center;
             font-family: var(--font-mono);
-            font-size: 0.8rem;
+            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
             color: var(--dim-text);
             border-top: 1px solid var(--border-color);
             background: #0a0a0a;
-        }
-
-        /* --- MOBILE RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .cursor-glow {
-                display: none;
-            }
-
-            nav {
-                padding: 1rem 2rem;
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .links {
-                gap: 1rem;
-            }
-
-            .hero {
-                padding: 2rem;
-                min-height: 80vh;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .scroll-indicator {
-                left: 2rem;
-                bottom: 2rem;
-            }
-
-            .about-section,
-            .portfolio-section {
-                padding: 4rem 2rem;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .contact-info {
-                padding: 2rem;
-            }
-
-            .email-link {
-                font-size: 1.2rem;
-            }
-
-            .project-item,
-            .project-item.reverse {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                margin-bottom: 6rem;
-            }
-
-            .project-item.reverse .project-info {
-                order: 0;
-            }
-
-            .project-item.reverse .project-media {
-                order: 1;
-            }
-
-            .project-info h3 {
-                font-size: 1.8rem;
-            }
-
-            .section-title {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
         }
 
         /* --- ACCESIBILIDAD --- */
@@ -580,11 +625,30 @@
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
+            
+            .cursor-glow {
+                display: none;
+            }
+        }
+
+        /* --- MEJORAS PARA PANTALLAS MUY PEQUEÑAS --- */
+        @media (max-width: 380px) {
+            .logo {
+                font-size: 0.85rem;
+            }
+            
+            .links a {
+                font-size: 0.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Efecto de luz de fondo -->
+    <!-- Efecto de luz de fondo (solo desktop) -->
     <div class="cursor-glow"></div>
 
     <!-- Navegación Minimalista -->
@@ -633,13 +697,39 @@
         <div class="container">
             <h2 class="section-title">
                 <span>Trabajos Seleccionados</span>
-                <span class="count">(02)</span>
+                <span class="count">(03)</span>
             </h2>
 
-            <!-- PROYECTO 1 -->
             <article class="project-item">
                 <div class="project-info">
                     <span class="project-number">01</span>
+                    <h3>ArtNet wireless lighting</h3>
+                    <p class="project-desc">Control de iluminación con ArtNet por wifi. Esp8266 y leds RGB ws2812b diseñado para una instalación sin cables</p>
+                    <a href="https://github.com/algomlop/artnet-esp8266" target="_blank" class="github-btn">
+                        Ver en GitHub
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                    </a>
+                </div>
+                <div class="project-media" data-video="1">
+                    <video 
+                        loop 
+                        muted
+                        playsinline 
+                        preload="metadata"
+                        poster="./proy_artnet.jpg"
+                        class="cinematic-video">
+                        <source src="./proy_artnet.mp4" type="video/mp4">
+                        Tu navegador no soporta video.
+                    </video>
+                    <div class="video-overlay">
+                        <div class="play-icon"></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-item">
+                <div class="project-info">
+                    <span class="project-number">02</span>
                     <h3>Tus respuestas marcarán el camino</h3>
                     <p class="project-desc">Sistema de votación para teatro interactivo. Soporta configuración de preguntas y API para conexión con QLAB</p>
                     <a href="https://663260932.xyz/index.php" target="_blank" class="github-btn">
@@ -651,7 +741,7 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
                     </a>
                 </div>
-                <div class="project-media">
+                <div class="project-media" data-video="1">
                     <video 
                         loop 
                         muted
@@ -662,13 +752,15 @@
                         <source src="./proy_respuestas.mp4" type="video/mp4">
                         Tu navegador no soporta video.
                     </video>
+                    <div class="video-overlay">
+                        <div class="play-icon"></div>
+                    </div>
                 </div>
             </article>
 
-            <!-- PROYECTO 2 -->
             <article class="project-item reverse">
                 <div class="project-info">
-                    <span class="project-number">02</span>
+                    <span class="project-number">03</span>
                     <h3>El árbol que respira</h3>
                     <p class="project-desc">Ambientación e iluminación de espacios. Múltiples efectos con esp8266 y leds ws2812b.</p>
                     <a href="https://github.com/algomlop/el-arbol-que-respira" target="_blank" class="github-btn">
@@ -676,7 +768,7 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
                     </a>
                 </div>
-                <div class="project-media">
+                <div class="project-media" data-video="2">
                     <video 
                         muted
                         loop 
@@ -687,6 +779,9 @@
                         <source src="./proy_arbol.mp4" type="video/mp4">
                         Tu navegador no soporta video.
                     </video>
+                    <div class="video-overlay">
+                        <div class="play-icon"></div>
+                    </div>
                 </div>
             </article>
         </div>
@@ -699,105 +794,46 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // --- EFECTO SPOTLIGHT ---
-            const glow = document.querySelector('.cursor-glow');
-            let mouseX = 0;
-            let mouseY = 0;
-            let glowX = 0;
-            let glowY = 0;
+            // Detectar si es dispositivo táctil
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            
+            // --- EFECTO SPOTLIGHT (SOLO DESKTOP) ---
+            if (!isTouchDevice) {
+                const glow = document.querySelector('.cursor-glow');
+                let mouseX = 0;
+                let mouseY = 0;
+                let glowX = 0;
+                let glowY = 0;
 
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
-
-            // Animación suave con interpolación
-            function animateGlow() {
-                glowX += (mouseX - glowX) * 0.1;
-                glowY += (mouseY - glowY) * 0.1;
-                
-                glow.style.left = `${glowX}px`;
-                glow.style.top = `${glowY}px`;
-                
-                requestAnimationFrame(animateGlow);
-            }
-            animateGlow();
-
-            // --- VIDEO HOVER MEJORADO (SIN SALTOS) ---
-            const videos = document.querySelectorAll('video');
-
-            videos.forEach(video => {
-                // Precargar metadata al hacer hover por primera vez
-                video.addEventListener('mouseenter', () => {
-                    if (video.readyState < 2) {
-                        video.load();
-                    }
-                    video.play().catch(err => console.log('Error al reproducir:', err));
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
                 });
 
-                // Pausar sin resetear
-                video.addEventListener('mouseleave', () => {
-                    video.pause();
-                    // NO usar video.load() aquí - esto causaba el salto
-                });
-
-                // Resetear solo cuando termine el loop si no hay hover
-                video.addEventListener('ended', () => {
-                    if (!video.matches(':hover')) {
-                        video.currentTime = 0;
-                    }
-                });
-            });
-
-            // --- SCROLL SUAVE MEJORADO ---
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-
-            // --- NAV SCROLL EFFECT ---
-            const nav = document.querySelector('nav');
-            let lastScroll = 0;
-
-            window.addEventListener('scroll', () => {
-                const currentScroll = window.pageYOffset;
-                
-                if (currentScroll > 100) {
-                    nav.classList.add('scrolled');
-                } else {
-                    nav.classList.remove('scrolled');
+                function animateGlow() {
+                    glowX += (mouseX - glowX) * 0.1;
+                    glowY += (mouseY - glowY) * 0.1;
+                    
+                    glow.style.left = `${glowX}px`;
+                    glow.style.top = `${glowY}px`;
+                    
+                    requestAnimationFrame(animateGlow);
                 }
+                animateGlow();
+            }
+
+            // --- VIDEO MEJORADO (DESKTOP + MOBILE) ---
+            const videoContainers = document.querySelectorAll('.project-media');
+
+            videoContainers.forEach(container => {
+                const video = container.querySelector('video');
                 
-                lastScroll = currentScroll;
-            });
-
-            // --- INTERSECTION OBSERVER PARA ANIMACIONES ---
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.project-item').forEach(item => {
-                observer.observe(item);
-            });
-        });
-    </script>
-</body>
-</html>
+                if (isTouchDevice) {
+                    // MÓVIL: Tap para reproducir/pausar
+                    container.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        
+                        if (video.paused) {
+                            video.play().then(() => {
+                                container.classList.add('playing');
+                            }).catch(
