@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- VARIABLES & RESET --- */
         :root {
             --bg-color: #050505;
             --text-color: #f0f0f0;
@@ -41,7 +40,6 @@
             cursor: default;
         }
 
-        /* --- EFECTO SPOTLIGHT (SOLO DESKTOP) --- */
         .cursor-glow {
             width: 600px;
             height: 600px;
@@ -63,7 +61,6 @@
             }
         }
 
-        /* --- NAV MEJORADO & RESPONSIVE --- */
         nav {
             display: flex;
             justify-content: space-between;
@@ -135,16 +132,14 @@
             }
         }
 
-        /* Touch feedback */
         .links a:active {
             color: var(--accent-color);
             transform: scale(0.95);
         }
 
-        /* --- HERO MEJORADO --- */
         .hero {
             min-height: 100vh;
-            min-height: 100svh; /* Safari mobile fix */
+            min-height: 100svh;
             display: flex;
             align-items: center;
             padding: var(--nav-height) clamp(1.5rem, 5vw, 4rem) 2rem;
@@ -243,7 +238,6 @@
             to { left: 100%; }
         }
 
-        /* --- ABOUT MEJORADO --- */
         .about-section {
             padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
             background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
@@ -372,7 +366,6 @@
             color: var(--accent-color);
         }
 
-        /* --- PORTFOLIO CINEMATOGRÁFICO MEJORADO --- */
         .portfolio-section {
             padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
         }
@@ -502,7 +495,6 @@
             }
         }
 
-        /* Touch feedback */
         .github-btn:active {
             border-color: var(--accent-color);
             background: rgba(100, 255, 218, 0.1);
@@ -514,11 +506,11 @@
             flex-shrink: 0;
         }
 
-        /* --- VIDEO MEJORADO (DESKTOP + MOBILE) --- */
         .project-media {
             position: relative;
             display: inline-block;
             line-height: 0;
+            cursor: pointer;
         }
 
         .cinematic-video {
@@ -527,85 +519,78 @@
             display: block;
             border-radius: 8px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            transition: transform 0.7s cubic-bezier(0.2, 1, 0.2, 1), 
+            transition: transform 0.5s cubic-bezier(0.2, 1, 0.2, 1), 
                         box-shadow 0.5s ease,
                         filter 0.3s ease;
-            filter: brightness(0.95) saturate(0.9);
+            filter: brightness(0.9);
         }
 
-        /* Indicador de play para móviles */
         .video-overlay {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
-            pointer-events: none;
-            opacity: 0;
+            opacity: 1;
             transition: opacity 0.3s ease;
+            pointer-events: none;
         }
 
-        @media (hover: none) {
-            .video-overlay {
-                display: flex;
-            }
-            
-            .project-media:not(.playing) .video-overlay {
-                opacity: 1;
-            }
+        .project-media.playing .video-overlay {
+            opacity: 0;
         }
 
         .play-icon {
-            width: 80px;
-            height: 80px;
-            border: 3px solid var(--accent-color);
+            width: 70px;
+            height: 70px;
+            border: 2px solid var(--accent-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(5, 5, 5, 0.8);
+            background: rgba(5, 5, 5, 0.7);
             backdrop-filter: blur(10px);
             animation: pulsePlay 2s ease-in-out infinite;
+            transition: transform 0.2s ease;
         }
 
         @keyframes pulsePlay {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.1); opacity: 1; }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .play-icon::after {
             content: '';
             width: 0;
             height: 0;
-            border-left: 20px solid var(--accent-color);
-            border-top: 12px solid transparent;
-            border-bottom: 12px solid transparent;
-            margin-left: 5px;
+            border-left: 18px solid var(--accent-color);
+            border-top: 11px solid transparent;
+            border-bottom: 11px solid transparent;
+            margin-left: 4px;
         }
 
-        /* Efecto hover solo en desktop */
-        @media (hover: hover) {
+        @media (hover: hover) and (pointer: fine) {
+            .video-overlay {
+                opacity: 0;
+            }
+
             .project-media:hover .cinematic-video {
                 transform: translateY(-10px) scale(1.02);
                 box-shadow: 0 35px 90px rgba(100, 255, 218, 0.15), 
                             0 15px 40px rgba(0, 0, 0, 0.8);
-                filter: brightness(1.05) saturate(1.1);
+                filter: brightness(1.05);
             }
         }
 
-        /* Video activo en móvil */
-        @media (hover: none) {
-            .project-media.playing .cinematic-video {
-                filter: brightness(1.05) saturate(1.1);
-            }
+        .project-media.playing .cinematic-video {
+            filter: brightness(1.05);
         }
 
-        /* --- FOOTER --- */
         footer {
             padding: clamp(2rem, 5vw, 4rem);
             text-align: center;
@@ -616,7 +601,6 @@
             background: #0a0a0a;
         }
 
-        /* --- ACCESIBILIDAD --- */
         @media (prefers-reduced-motion: reduce) {
             *,
             *::before,
@@ -631,7 +615,6 @@
             }
         }
 
-        /* --- MEJORAS PARA PANTALLAS MUY PEQUEÑAS --- */
         @media (max-width: 380px) {
             .logo {
                 font-size: 0.85rem;
@@ -648,10 +631,8 @@
     </style>
 </head>
 <body>
-    <!-- Efecto de luz de fondo (solo desktop) -->
     <div class="cursor-glow"></div>
 
-    <!-- Navegación Minimalista -->
     <nav>
         <div class="logo">ALEJANDRO GÓMEZ<span class="dot">.</span></div>
         <div class="links">
@@ -661,19 +642,14 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <header class="hero">
         <div class="hero-content">
             <h1>Creando experiencias <br> donde el <span class="highlight">arte</span><br> encuentra al <span class="highlight">código</span>.</h1>
             <p class="subtitle">Desarrollador Creativo & Artista Digital</p>
         </div>
-        <div class="scroll-indicator">
-            <span>Scroll para explorar</span>
-            <div class="line"></div>
-        </div>
+      
     </header>
 
-    <!-- Sección Sobre Mí / Contacto -->
     <section id="about" class="about-section">
         <div class="container">
             <div class="about-grid">
@@ -692,7 +668,6 @@
         </div>
     </section>
 
-    <!-- Portfolio Cinematográfico -->
     <section id="portfolio" class="portfolio-section">
         <div class="container">
             <h2 class="section-title">
@@ -710,7 +685,7 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
                     </a>
                 </div>
-                <div class="project-media" data-video="1">
+                <div class="project-media">
                     <video 
                         loop 
                         muted
@@ -741,7 +716,7 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
                     </a>
                 </div>
-                <div class="project-media" data-video="1">
+                <div class="project-media">
                     <video 
                         loop 
                         muted
@@ -768,7 +743,7 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
                     </a>
                 </div>
-                <div class="project-media" data-video="2">
+                <div class="project-media">
                     <video 
                         muted
                         loop 
@@ -793,17 +768,12 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            
-            // Detectar si es dispositivo táctil
             const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
             
-            // --- EFECTO SPOTLIGHT (SOLO DESKTOP) ---
+            // Efecto spotlight (solo desktop)
             if (!isTouchDevice) {
                 const glow = document.querySelector('.cursor-glow');
-                let mouseX = 0;
-                let mouseY = 0;
-                let glowX = 0;
-                let glowY = 0;
+                let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
 
                 document.addEventListener('mousemove', (e) => {
                     mouseX = e.clientX;
@@ -813,27 +783,60 @@
                 function animateGlow() {
                     glowX += (mouseX - glowX) * 0.1;
                     glowY += (mouseY - glowY) * 0.1;
-                    
                     glow.style.left = `${glowX}px`;
                     glow.style.top = `${glowY}px`;
-                    
                     requestAnimationFrame(animateGlow);
                 }
                 animateGlow();
             }
 
-            // --- VIDEO MEJORADO (DESKTOP + MOBILE) ---
+            // Control de videos
             const videoContainers = document.querySelectorAll('.project-media');
 
             videoContainers.forEach(container => {
                 const video = container.querySelector('video');
                 
                 if (isTouchDevice) {
-                    // MÓVIL: Tap para reproducir/pausar
+                    // Móvil: click para play/pause
                     container.addEventListener('click', (e) => {
                         e.preventDefault();
                         
                         if (video.paused) {
                             video.play().then(() => {
                                 container.classList.add('playing');
-                            }).catch(
+                            }).catch(err => {
+                                console.log('Error playing video:', err);
+                            });
+                        } else {
+                            video.pause();
+                            container.classList.remove('playing');
+                        }
+                    });
+                } else {
+                    // Desktop: hover para play
+                    container.addEventListener('mouseenter', () => {
+                        video.play().catch(err => {
+                            console.log('Error playing video:', err);
+                        });
+                    });
+                    
+                    container.addEventListener('mouseleave', () => {
+                        video.pause();
+                        video.currentTime = 0;
+                    });
+                }
+            });
+
+            // Nav scroll effect
+            const nav = document.querySelector('nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
