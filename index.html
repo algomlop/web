@@ -647,7 +647,7 @@
             <h1>Creando experiencias <br> donde el <span class="highlight">arte</span><br> encuentra al <span class="highlight">código</span>.</h1>
             <p class="subtitle">Desarrollador Creativo & Artista Digital</p>
         </div>
-      
+    
     </header>
 
     <section id="about" class="about-section">
@@ -809,6 +809,8 @@
                             });
                         } else {
                             video.pause();
+                            video.currentTime = 0;
+                            video.load(); // Forzar recarga del poster
                             container.classList.remove('playing');
                         }
                     });
@@ -823,6 +825,7 @@
                     container.addEventListener('mouseleave', () => {
                         video.pause();
                         video.currentTime = 0;
+                        video.load(); // Forzar recarga del poster
                     });
                 }
             });
