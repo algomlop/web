@@ -20,6 +20,39 @@
             --nav-height: 70px;
         }
 
+        .volume-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(5, 5, 5, 0.7);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            color: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+        
+        .project-media:hover .volume-btn,
+        .project-media.playing .volume-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .volume-btn:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            transform: scale(1.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -692,7 +725,6 @@
                 <div class="project-media">
                     <video 
                         loop 
-                        muted
                         playsinline 
                         preload="metadata"
                         poster="./inex.png"
@@ -719,6 +751,13 @@
                 <div class="project-media">
                     <img src="./proy_artnet.jpg" alt="Descripción de la imagen" class="cinematic-video">
                 </div>
+
+                <button class="volume-btn" aria-label="Activar sonido">
+                    <!-- Icono Muteado (por defecto) -->
+                    <svg class="icon-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                    <!-- Icono Sonido -->
+                    <svg class="icon-sound" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
               
             </article>
             
@@ -810,45 +849,78 @@
             }
 
             // Control de videos
+            // Control de videos
             const videoContainers = document.querySelectorAll('.project-media');
-
+            
             videoContainers.forEach(container => {
                 const video = container.querySelector('video');
-                if (!video) return; 
-                
-                if (isTouchDevice) {
-                    // Móvil: click para play/pause
-                    container.addEventListener('click', (e) => {
-                        e.preventDefault();
+                const volumeBtn = container.querySelector('.volume-btn');
+                if (!video) return;
+            
+                // Asegurar que siempre empiece muteado para permitir autoplay
+                video.muted = true;
+            
+                // Función para alternar sonido
+                if (volumeBtn) {
+                    volumeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Evitar que el click se propague al contenedor
+                        video.muted = !video.muted;
                         
+                        // Cambiar iconos
+                        const iconMuted = volumeBtn.querySelector('.icon-muted');
+                        const iconSound = volumeBtn.querySelector('.icon-sound');
+                        
+                        if (video.muted) {
+                            iconMuted.style.display = 'block';
+                            iconSound.style.display = 'none';
+                        } else {
+                            iconMuted.style.display = 'none';
+                            iconSound.style.display = 'block';
+                        }
+                    });
+                }
+            
+                if (isTouchDevice) {
+                    // Lógica Móvil (igual que tenías pero gestionando mute)
+                    container.addEventListener('click', (e) => {
+                        if (e.target.closest('.volume-btn')) return; // Ignorar si click en volumen
+            
                         if (video.paused) {
                             video.play().then(() => {
                                 container.classList.add('playing');
-                            }).catch(err => {
-                                console.log('Error playing video:', err);
-                            });
+                            }).catch(err => console.log('Error playing:', err));
                         } else {
                             video.pause();
                             video.currentTime = 0;
-                            video.load(); // Forzar recarga del poster
+                            video.load();
+                            video.muted = true; // Resetear a mute al parar
+                            resetVolumeIcon(volumeBtn);
                             container.classList.remove('playing');
                         }
                     });
                 } else {
-                    // Desktop: hover para play
+                    // Lógica Desktop
                     container.addEventListener('mouseenter', () => {
-                        video.play().catch(err => {
-                            console.log('Error playing video:', err);
-                        });
+                        // Siempre inicia muteado por políticas del navegador
+                        video.muted = true;
+                        video.play().catch(err => console.log('Error playing:', err));
                     });
                     
                     container.addEventListener('mouseleave', () => {
                         video.pause();
                         video.currentTime = 0;
-                        video.load(); // Forzar recarga del poster
+                        video.load(); // Resetear video
+                        video.muted = true; // Importante: volver a mutear para la próxima vez
+                        resetVolumeIcon(volumeBtn);
                     });
                 }
             });
+            
+            function resetVolumeIcon(btn) {
+                if (!btn) return;
+                btn.querySelector('.icon-muted').style.display = 'block';
+                btn.querySelector('.icon-sound').style.display = 'none';
+            }
 
             // Nav scroll effect
             const nav = document.querySelector('nav');
