@@ -718,21 +718,12 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
                     </a>
                 </div>
+                                    
                 <div class="project-media">
-                    <video 
-                        loop 
-                        muted
-                        playsinline 
-                        preload="metadata"
-                        poster="./proy_synth2.jpg"
-                        class="cinematic-video">
-                        <source src="./proy_synth.mp4" type="video/mp4">
-                        Tu navegador no soporta video.
-                    </video>
-                    <div class="video-overlay">
-                        <div class="play-icon"></div>
-                    </div>
+                    <img src="./proy_synth2.jpg" alt="Descripción de la imagen" class="cinematic-video">
                 </div>
+
+  
             </article>
 
             <article class="project-item">
@@ -746,20 +737,9 @@
                     </a>
                 </div>
                 <div class="project-media">
-                    <video 
-                        loop 
-                        muted
-                        playsinline 
-                        preload="metadata"
-                        poster="./proy_artnet.jpg"
-                        class="cinematic-video">
-                        <source src="./proy_artnet.mp4" type="video/mp4">
-                        Tu navegador no soporta video.
-                    </video>
-                    <div class="video-overlay">
-                        <div class="play-icon"></div>
-                    </div>
+                    <img src="./proy_artnet.jpg" alt="Descripción de la imagen" class="cinematic-video">
                 </div>
+              
             </article>
 
             
@@ -778,20 +758,9 @@
                     </a>
                 </div>
                 <div class="project-media">
-                    <video 
-                        loop 
-                        muted
-                        playsinline 
-                        preload="metadata"
-                        poster="./proy_respuestas.jpg"
-                        class="cinematic-video">
-                        <source src="./proy_respuestas.mp4" type="video/mp4">
-                        Tu navegador no soporta video.
-                    </video>
-                    <div class="video-overlay">
-                        <div class="play-icon"></div>
-                    </div>
+                    <img src="./proy_respuestas.jpg" alt="Descripción de la imagen" class="cinematic-video">
                 </div>
+             
             </article>
 
             <article class="project-item reverse">
@@ -805,20 +774,9 @@
                     </a>
                 </div>
                 <div class="project-media">
-                    <video 
-                        muted
-                        loop 
-                        playsinline 
-                        preload="metadata"
-                        poster="./proy_arbol.jpg"
-                        class="cinematic-video">
-                        <source src="./proy_arbol.mp4" type="video/mp4">
-                        Tu navegador no soporta video.
-                    </video>
-                    <div class="video-overlay">
-                        <div class="play-icon"></div>
-                    </div>
+                    <img src="./proy_arbol.jpg" alt="Descripción de la imagen" class="cinematic-video">
                 </div>
+         
             </article>
         </div>
     </section>
@@ -856,6 +814,7 @@
 
             videoContainers.forEach(container => {
                 const video = container.querySelector('video');
+                if (!video) return; 
                 
                 if (isTouchDevice) {
                     // Móvil: click para play/pause
